@@ -5,6 +5,7 @@
     <head>
         <meta charset="utf-8">
         <title>Practice 2</title>
+        <link rel="stylesheet" href="styles/main.css" type="text/css"/>
     </head>
     <body>
 
@@ -18,7 +19,7 @@
 
 
             <br>
-            <c:forEach var="item" items="${linkMap}" varStatus="status">
+            
 
                 <table>
                     <tr>
@@ -29,8 +30,10 @@
                         <th>Birth Date</th>
                         <th>Hire Date</th>
                         <th>&nbsp;</th>
-                        
                     </tr>
+                    
+                    <c:forEach var="item" items="${linkMap}" varStatus="status">
+                    
                     <tr>
                         <td>${item.key}</td>
                         <td>${item.value.firstName}</td>
@@ -40,8 +43,8 @@
                         <td>${item.value.hireDate}</td>
                         <td>
                             <form action="" method="get">
-                                <input type="hidden" value="?">
-                                <input type="submit" value="">
+                                <input type="hidden" name="numEmployee" value="0">
+                                <input type="submit" value="Delete Employee">
                                 <input type="hidden" name="personIndex" 
                                        value="<c:out value="${item.key}"/>">
                                 
@@ -49,7 +52,7 @@
                         </td>
                     </tr>
                 </table>
-                ${status.count}.
+                <%--${status.count}.--%>
 
 
             </c:forEach>  
