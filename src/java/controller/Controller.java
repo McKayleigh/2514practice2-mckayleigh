@@ -34,16 +34,16 @@ public class Controller extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException 
+    {
 
         String url = "/display.jsp";
 
         String action = request.getParameter("action");
-        if (action == null) {
+        if (action == null) 
+        {
             action = "first";
         }
-
-        
        
         LinkedHashMap<Integer, Person> linkMap = new LinkedHashMap();
         
@@ -59,7 +59,8 @@ public class Controller extends HttpServlet {
         
         
 
-        if (action.equals("first")) {
+        if (action.equals("first")) 
+        {
 
         }
 
