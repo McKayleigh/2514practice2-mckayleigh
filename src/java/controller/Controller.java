@@ -51,7 +51,9 @@ public class Controller extends HttpServlet {
         linkMap.put(731, new Person("Pris", "", "Stratton", 731,
                 LocalDate.of(2016, Month.FEBRUARY, 14), LocalDate.of(2016, Month.FEBRUARY, 10)));
         linkMap.put(734, new Person("Roy", "", "Batty", 734,
-                LocalDate.of(2016, Month.JANUARY, 8), LocalDate.of(2016, Month.JANUARY, 9)));        
+                LocalDate.of(2016, Month.JANUARY, 8), LocalDate.of(2016, Month.JANUARY, 9)));
+        linkMap.put(735, new Person("Ben", "", "Benson", 735,
+                LocalDate.of(2016, Month.JANUARY, 10), LocalDate.of(2018, Month.JANUARY, 20)));
         
         request.setAttribute("linkMap", linkMap);
         
