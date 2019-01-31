@@ -8,56 +8,39 @@
         <link rel="stylesheet" href="styles/main.css" type="text/css"/>
     </head>
     <body>
-
+        <br>
         <table>
+            <tr>
+                <th>Employee ID</th>
+                <th>First Name</th>
+                <th>Middle Name</th>
+                <th>Last Name</th>
+                <th>Birth Date</th>
+                <th>Hire Date</th>
+                <th>&nbsp;</th>
+            </tr>
 
-            <!--<p>Just item.lastName causes an error because item is a LinkedHashMap$Entry not a Person.
+            <c:forEach var="item" items="${linkMap}" varStatus="status">
 
-                A LinkedHashMap$Entry has a key and a value, the stored Person is in the .value so 
-                
-                to get the last name item.value.lastName</p>-->
+                <tr>
+                    <td>${item.key}</td>
+                    <td>${item.value.firstName}</td>
+                    <td>${item.value.middleName}</td>
+                    <td>${item.value.lastName}</td>
+                    <td>${item.value.birthDate}</td>
+                    <td>${item.value.hireDate}</td>
+                    <td>
+                        <form action="" method="get">
+                            <input type="hidden" name="numEmployee" value="0">
+                            <input type="submit" value="Delete Employee">
+                            <input type="hidden" name="personIndex" 
+                                   value="<c:out value="${item.key}"/>">
 
-
-            <br>
-            
-
-                <table>
-                    <tr>
-                        <th>Employee ID</th>
-                        <th>First Name</th>
-                        <th>Middle Name</th>
-                        <th>Last Name</th>
-                        <th>Birth Date</th>
-                        <th>Hire Date</th>
-                        <th>&nbsp;</th>
-                    </tr>
-                    
-                    <c:forEach var="item" items="${linkMap}" varStatus="status">
-                    
-                    <tr>
-                        <td>${item.key}</td>
-                        <td>${item.value.firstName}</td>
-                        <td>${item.value.middleName}</td>
-                        <td>${item.value.lastName}</td>
-                        <td>${item.value.birthDate}</td>
-                        <td>${item.value.hireDate}</td>
-                        <td>
-                            <form action="" method="get">
-                                <input type="hidden" name="numEmployee" value="0">
-                                <input type="submit" value="Delete Employee">
-                                <input type="hidden" name="personIndex" 
-                                       value="<c:out value="${item.key}"/>">
-                                
-                            </form>
-                        </td>
-                    </tr>
-                </table>
+                        </form>
+                    </td>
+                </tr>
                 <%--${status.count}.--%>
-
-
             </c:forEach>  
         </table>
-
-
     </body>
 </html>
