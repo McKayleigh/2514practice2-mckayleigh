@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="styles/main.css" type="text/css"/>
     </head>
     <body>
+        <p>${error}</p>
         <br>
         <table>
             <tr>
@@ -31,11 +32,10 @@
                     <td>${item.value.hireDate}</td>
                     <td>
                         <form action="" method="get">
-                            <input type="hidden" name="numEmployee" value="0">
+                            <input type="hidden" name="action" value="deleteEmployee">
                             <input type="submit" value="Delete Employee">
                             <input type="hidden" name="personIndex" 
                                    value="<c:out value="${item.key}"/>">
-
                         </form>
                     </td>
                 </tr>

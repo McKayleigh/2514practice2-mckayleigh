@@ -22,7 +22,9 @@ public class Person implements Serializable{
 
     public Person () {};
     
-    public Person (String firstName, String middleName, String lastName, int employeeID, LocalDate birthDate, LocalDate hireDate) {
+    public Person (String firstName, String middleName, String lastName, 
+            int employeeID, LocalDate birthDate, LocalDate hireDate) 
+    {
         this.firstName=firstName;
         this.middleName=middleName;
         this.lastName=lastName;
@@ -30,88 +32,67 @@ public class Person implements Serializable{
         this.birthDate=birthDate;
         this.hireDate=hireDate;
     }
-    /**
-     * @return the firstName
-     */
-    public String getFirstName() {
+    
+    ////////Getters and Setters/////////////////
+    public String getFirstName() 
+    {
         return firstName;
     }
 
-    /**
-     * @param firstName the firstName to set
-     */
-    public void setFirstName(String firstName) {
+    public void setFirstName(String firstName) 
+    {
         this.firstName = firstName;
     }
 
-    /**
-     * @return the middleName
-     */
-    public String getMiddleName() {
+    public String getMiddleName() 
+    {
         return middleName;
     }
 
-    /**
-     * @param middleName the middleName to set
-     */
-    public void setMiddleName(String middleName) {
+    public void setMiddleName(String middleName) 
+    {
         this.middleName = middleName;
     }
 
-    /**
-     * @return the lastName
-     */
-    public String getLastName() {
+    public String getLastName() 
+    {
         return lastName;
     }
 
-    /**
-     * @param lastName the lastName to set
-     */
-    public void setLastName(String lastName) {
+    public void setLastName(String lastName) 
+    {
         this.lastName = lastName;
     }
 
-    /**
-     * @return the employeeID
-     */
-    public int getEmployeeID() {
+    public int getEmployeeID() 
+    {
         return employeeID;
     }
 
-    /**
-     * @param employeeID the employeeID to set
-     */
-    public void setEmployeeID(int employeeID) {
+    public void setEmployeeID(int employeeID) 
+    {
         this.employeeID = employeeID;
     }
 
-    /**
-     * @return the birthDate
-     */
-    public LocalDate getBirthDate() {
+    public LocalDate getBirthDate() 
+    {
         return birthDate;
     }
 
-    /**
-     * @param birthDate the birthDate to set
-     */
-    public void setBirthDate(LocalDate birthDate) {
+    public void setBirthDate(LocalDate birthDate) 
+    {
         this.birthDate = birthDate;
     }
 
-    /**
-     * @return the hireDate
-     */
-    public LocalDate getHireDate() {
+    public LocalDate getHireDate() 
+    {
         return hireDate;
     }
 
-    /**
-     * @param hireDate the hireDate to set
-     */
-    public void setHireDate(LocalDate hireDate) {
+    public void setHireDate(LocalDate hireDate) 
+    {
         this.hireDate = hireDate;
     }
+    
     
 }

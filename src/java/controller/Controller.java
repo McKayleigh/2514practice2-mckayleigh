@@ -36,7 +36,6 @@ public class Controller extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
     {
-
         String url = "/display.jsp";
 
         String action = request.getParameter("action");
@@ -46,7 +45,6 @@ public class Controller extends HttpServlet {
         }
        
         LinkedHashMap<Integer, Person> linkMap = new LinkedHashMap();
-        
         
         linkMap.put(731, new Person("Pris", "", "Stratton", 731,
                 LocalDate.of(2016, Month.FEBRUARY, 14), LocalDate.of(2016, Month.FEBRUARY, 10)));
@@ -58,12 +56,36 @@ public class Controller extends HttpServlet {
         request.setAttribute("linkMap", linkMap);
         
         
+        String error = "";
 
         if (action.equals("first")) 
         {
-
+            
         }
-
+        else if(action.equals("deleteEmployee"))
+        {
+            int personIndex = 0;
+            try
+            {
+                personIndex = Integer.parseInt(request.getParameter("personIndex"));
+            }
+            catch(Exception e)
+            {
+                error += "Not a vaild ID. ";
+            }
+            
+            if(linkMap.containsKey(personIndex))
+            {
+                linkMap.remove(personIndex);
+                url = "/display.jsp";
+            }
+            else
+            {
+                error += "There is no Employee with that ID. ";
+            }
+        }
+        request.setAttribute("error", error);
+        
         ServletContext sc = getServletContext();
 
         sc.getRequestDispatcher(url)
