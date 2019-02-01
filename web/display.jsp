@@ -42,5 +42,11 @@
                 <%--${status.count}.--%>
             </c:forEach>  
         </table>
+        <br><br>
+        <form action="" method="get">
+            <input type="hidden" name="action" value="resetEmployees">
+            <input type="submit" value="Reset Employees">
+        </form>
+
     </body>
 </html>

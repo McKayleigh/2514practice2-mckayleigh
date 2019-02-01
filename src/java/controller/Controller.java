@@ -17,13 +17,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author fssco
  */
-public class Controller extends HttpServlet {
-
+public class Controller extends HttpServlet 
+{
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -43,24 +44,32 @@ public class Controller extends HttpServlet {
         {
             action = "first";
         }
-       
-        LinkedHashMap<Integer, Person> linkMap = new LinkedHashMap();
+        HttpSession session = request.getSession();
         
-        linkMap.put(731, new Person("Pris", "", "Stratton", 731,
+        LinkedHashMap<Integer, Person> linkMap = (LinkedHashMap) session.getAttribute("linkMap");
+        //LinkedHashMap<Integer, Person> linkMap = new LinkedHashMap();
+        
+        if(linkMap == null)
+        {
+            linkMap = new LinkedHashMap();
+            
+            linkMap.put(731, new Person("Pris", "", "Stratton", 731,
                 LocalDate.of(2016, Month.FEBRUARY, 14), LocalDate.of(2016, Month.FEBRUARY, 10)));
-        linkMap.put(734, new Person("Roy", "", "Batty", 734,
+            linkMap.put(734, new Person("Roy", "", "Batty", 734,
                 LocalDate.of(2016, Month.JANUARY, 8), LocalDate.of(2016, Month.JANUARY, 9)));
-        linkMap.put(735, new Person("Ben", "", "Benson", 735,
+            linkMap.put(735, new Person("Ben", "", "Benson", 735,
                 LocalDate.of(2016, Month.JANUARY, 10), LocalDate.of(2018, Month.JANUARY, 20)));
+        }
+       
+        session.setAttribute("linkMap", linkMap);
         
         request.setAttribute("linkMap", linkMap);
         
-        
         String error = "";
 
-        if (action.equals("first")) 
+        if(action.equals("first"))
         {
-            
+            url = "/display.jsp";
         }
         else if(action.equals("deleteEmployee"))
         {
@@ -77,20 +86,28 @@ public class Controller extends HttpServlet {
             if(linkMap.containsKey(personIndex))
             {
                 linkMap.remove(personIndex);
-                url = "/display.jsp";
             }
             else
             {
                 error += "There is no Employee with that ID. ";
             }
         }
+        else if (action.equals("resetEmployees")) 
+        {
+            session.invalidate();
+            //I found the next two lines here: https://stackoverflow.com/questions/23618089/how-to-reset-session-within-jsp
+            // when I tried to just set the url back to "/display,jsp", it would take
+            //two clicks of the reset button to kill the session and redirect to the display page
+            response.sendRedirect("");
+            return;
+        }
+         
         request.setAttribute("error", error);
         
         ServletContext sc = getServletContext();
 
         sc.getRequestDispatcher(url)
                 .forward(request, response);
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
