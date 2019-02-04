@@ -6,8 +6,8 @@
 package controller;
 
 import business.Person;
+import business.Validation;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
@@ -108,6 +108,18 @@ public class Controller extends HttpServlet
 
         sc.getRequestDispatcher(url)
                 .forward(request, response);
+    }
+    
+    private String isValid(HttpServletRequest request, HttpServletResponse response)
+    {
+        String errorMsg = "";
+        Validation v = new Validation();
+        
+        errorMsg += v.isPresent(request.getParameter("fName"), "First Name");
+        //middle name can be blank
+        errorMsg += v.isPresent(request.getParameter("lName"), "Last Name");
+        errorMsg += v.isPresent(request.getParameter("fName"), "First Name");
+        return errorMsg;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
