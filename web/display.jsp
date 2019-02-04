@@ -4,10 +4,11 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Practice 2</title>
+        <title>Employees</title>
         <link rel="stylesheet" href="styles/main.css" type="text/css"/>
     </head>
     <body>
+        <h1>Current Employees</h1>
         <p>${error}</p>
         <br>
         <table>
@@ -42,6 +43,32 @@
                 <%--${status.count}.--%>
             </c:forEach>  
         </table>
+        <br><br>
+        <h1>Add New Employee</h1>
+        
+        <form action="" method="get">
+            <label>First Name</label>
+            <input type="text" name="fName" value="">
+            <br><br>
+            <label>Middle Name</label>
+            <input type="text" name="mName" value="">
+            <br><br>
+            <label>Last Name</label>
+            <input type="text" name="lName" value="">
+            <br><br>
+            <label>Employee ID</label>
+            <input type="text" name="empID" value="">
+            <br><br>
+            <label>Birth Date</label>
+            <input type="text" name="DOB" value="">
+            <br><br>
+            <label>Hire Date</label>
+            <input type="text" name="hireDate" value="">
+            <br><br>
+            <input type="hidden" name="action" value="addEmployee">
+            <input type="submit" value="Add Employee"
+        </form>
+        
         <br><br>
         <form action="" method="get">
             <input type="hidden" name="action" value="resetEmployees">
