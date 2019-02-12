@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="utf-8"%>
+<%@page import="business.Person"%>
 <!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -45,28 +46,29 @@
         </table>
         <br><br>
         <h1>Add New Employee</h1>
+        <p>${error2}</p>
         
-        <form action="" method="get">
+        <form action="Controller" method="get">
             <label>First Name</label>
-            <input type="text" name="fName" value="">
+            <input type="text" name="fName" value="${person.firstName}">
             <br><br>
             <label>Middle Name</label>
-            <input type="text" name="mName" value="">
+            <input type="text" name="mName" value="${person.middleName}">
             <br><br>
             <label>Last Name</label>
-            <input type="text" name="lName" value="">
+            <input type="text" name="lName" value="${person.lastName}">
             <br><br>
             <label>Employee ID</label>
-            <input type="text" name="empID" value="">
+            <input type="text" name="empID" value="${person.employeeID}">
             <br><br>
             <label>Birth Date</label>
-            <input type="text" name="DOB" value="">
+            <input type="date" name="DOB" value="${person.birthDate}">
             <br><br>
             <label>Hire Date</label>
-            <input type="text" name="hireDate" value="">
+            <input type="date" name="hireDate" value="${person.hireDate}">
             <br><br>
             <input type="hidden" name="action" value="addEmployee">
-            <input type="submit" value="Add Employee"
+            <input type="submit" value="Add Employee">
         </form>
         
         <br><br>

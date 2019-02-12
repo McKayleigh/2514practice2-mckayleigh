@@ -101,8 +101,104 @@ public class Controller extends HttpServlet
             response.sendRedirect("");
             return;
         }
+        else if(action.equals("addEmployee"))
+        {
+            error = "";
+            int employeeID = 0;
+            LocalDate birthDate = null;
+            LocalDate hireDate = null;
+            
+            //get values from form
+            String fName = request.getParameter("fName");
+            String mName = request.getParameter("mName");
+            String lName = request.getParameter("lName");
+            String empIDIn = request.getParameter("empID");
+            String birthdayDate = request.getParameter("DOB");
+            String hiredDate = request.getParameter("hireDate");
+            
+            //validate the form
+            //fName
+            if(fName == null || fName.equals("")) 
+            {
+                error += "First Name must not be blank. ";
+            }
+            
+            //mName
+            //if(mName == null || mName.equals("")) 
+            //{
+                //error += "Middle Name must not be blank. ";
+            //}
+            
+            //lName
+            if(lName == null || lName.equals("")) 
+            {
+                error += "Last Name must not be blank. ";
+            }
+            
+            //employeeID
+            try
+            {
+                employeeID = Integer.parseInt(empIDIn);
+                
+                if(employeeID <= 0)
+                {
+                    error += "Age must be greater than 0. ";
+                }
+                else
+                {
+                    if(linkMap.containsKey(employeeID))
+                    {
+                        error += "There is already an Employee with that ID. ";
+                        
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                error += "Employee ID must be a number. ";
+            }
+            
+            //birth date
+            try
+            {
+                birthDate = LocalDate.parse(birthdayDate);
+            }
+            catch(Exception e)
+            {
+                error += "Birth date must be a valid date. ";
+            }
+            
+            //birth date
+            try
+            {
+                hireDate = LocalDate.parse(hiredDate);
+            }
+            catch(Exception e)
+            {
+                error += "Hire date must be a valid date. ";
+            }
+            
+            //store data in Student object
+            Person person = new Person(fName, mName, lName, employeeID, 
+                        birthDate, hireDate);
+            
+            //if vaild
+            if (error.equals("")) 
+            {
+                url = "/display.jsp";
+                linkMap.put(employeeID, new Person(fName, mName, lName, employeeID, 
+                        birthDate, hireDate));
+            }
+            //if not valid
+            else
+            {
+                url = "/display.jsp";
+            }
+            request.setAttribute("person", person);
+            request.setAttribute("error2", error);
+        }
          
-        request.setAttribute("error", error);
+        request.setAttribute("error2", error);
         
         ServletContext sc = getServletContext();
 
