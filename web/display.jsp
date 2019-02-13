@@ -61,7 +61,9 @@
             <label>Employee ID</label>
             <input type="text" name="empID" value="${person.employeeID}">
             <br><br>
-            <label>Birth Date</label>
+            
+            <label<c:if test="${invalidDate != null}">
+                    class="wrongDate" </c:if>>Birth Date</label>
             <input type="date" name="DOB" value="${person.birthDate}">
             <br><br>
             <label>Hire Date</label>

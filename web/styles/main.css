@@ -18,6 +18,10 @@ p {
     color: red;
 }
 
+.wrongDate {
+    color: red;
+}
+
 #quantity {
     width: 2em;
 }

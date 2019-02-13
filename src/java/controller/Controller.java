@@ -107,6 +107,7 @@ public class Controller extends HttpServlet
             int employeeID = 0;
             LocalDate birthDate = null;
             LocalDate hireDate = null;
+            String invalidDate = null;
             
             //get values from form
             String fName = request.getParameter("fName");
@@ -120,7 +121,7 @@ public class Controller extends HttpServlet
             //fName
             if(fName == null || fName.equals("")) 
             {
-                error += "First Name must not be blank. ";
+                error += "First Name must not be blank. <br>";
             }
             
             //mName
@@ -132,7 +133,7 @@ public class Controller extends HttpServlet
             //lName
             if(lName == null || lName.equals("")) 
             {
-                error += "Last Name must not be blank. ";
+                error += "Last Name must not be blank. <br>";
             }
             
             //employeeID
@@ -142,20 +143,19 @@ public class Controller extends HttpServlet
                 
                 if(employeeID <= 0)
                 {
-                    error += "Age must be greater than 0. ";
+                    error += "Employee ID must be greater than 0. <br>";
                 }
                 else
                 {
                     if(linkMap.containsKey(employeeID))
                     {
-                        error += "There is already an Employee with that ID. ";
-                        
+                        error += "There is already an Employee with that ID. <br>";
                     }
                 }
             }
             catch(Exception e)
             {
-                error += "Employee ID must be a number. ";
+                error += "Employee ID must be a number. <br>";
             }
             
             //birth date
@@ -165,7 +165,7 @@ public class Controller extends HttpServlet
             }
             catch(Exception e)
             {
-                error += "Birth date must be a valid date. ";
+                error += "Birth date must be a valid date. <br>";
             }
             
             //birth date
@@ -175,8 +175,19 @@ public class Controller extends HttpServlet
             }
             catch(Exception e)
             {
-                error += "Hire date must be a valid date. ";
+                error += "Hire date must be a valid date. <br>";
             }
+          
+            if(birthDate != null && hireDate != null)
+            {
+                if(hireDate.isBefore(birthDate))
+                {
+                    invalidDate = "not valid";
+                    error += "Hire date must not be before birth date. <br>";
+                    request.setAttribute("invalidDate", invalidDate);
+                }
+            }
+            
             
             //store data in Student object
             Person person = new Person(fName, mName, lName, employeeID, 
@@ -185,20 +196,19 @@ public class Controller extends HttpServlet
             //if vaild
             if (error.equals("")) 
             {
-                url = "/display.jsp";
                 linkMap.put(employeeID, new Person(fName, mName, lName, employeeID, 
                         birthDate, hireDate));
+                url = "/display.jsp";
             }
             //if not valid
             else
             {
                 url = "/display.jsp";
+                request.setAttribute("person", person);
+                request.setAttribute("error2", error);
             }
-            request.setAttribute("person", person);
-            request.setAttribute("error2", error);
+            
         }
-         
-        request.setAttribute("error2", error);
         
         ServletContext sc = getServletContext();
 
