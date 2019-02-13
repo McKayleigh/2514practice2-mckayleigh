@@ -4,18 +4,24 @@
         <servlet-name>Controller</servlet-name>
         <servlet-class>controller.Controller</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>TestServlet</servlet-name>
+        <servlet-class>controller.TestServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Controller</servlet-name>
         <url-pattern>/Controller</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TestServlet</servlet-name>
+        <url-pattern>/TestServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
-    
     <welcome-file-list>
         <welcome-file>Controller</welcome-file>
     </welcome-file-list>
-    
 </web-app>
