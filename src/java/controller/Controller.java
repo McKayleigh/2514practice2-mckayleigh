@@ -205,7 +205,6 @@ public class Controller extends HttpServlet
         }
         else if(action.equals("editEmployee"))
         {
-            //
             try
             {
                 personInd = Integer.parseInt(request.getParameter("personIndex"));
