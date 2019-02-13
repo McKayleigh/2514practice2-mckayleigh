@@ -20,13 +20,14 @@
                 <th>Last Name</th>
                 <th>Birth Date</th>
                 <th>Hire Date</th>
-                <th>&nbsp;</th>
+                <th>Delete</th>
+                <th>Edit</th>
             </tr>
 
             <c:forEach var="item" items="${linkMap}" varStatus="status">
 
                 <tr>
-                    <td>${item.key}</td>
+                    <td>${item.value.employeeID}</td>
                     <td>${item.value.firstName}</td>
                     <td>${item.value.middleName}</td>
                     <td>${item.value.lastName}</td>
@@ -40,12 +41,20 @@
                                    value="<c:out value="${item.key}"/>">
                         </form>
                     </td>
+                    <td>
+                        <form action="" method="get">
+                            <input type="hidden" name="action" value="editEmployee">
+                            <input type="submit" value="Edit Employee">
+                            <input type="hidden" name="personIndex" 
+                                   value="<c:out value="${item.key}"/>">
+                        </form>
+                    </td>
                 </tr>
                 <%--${status.count}.--%>
             </c:forEach>  
         </table>
         <br><br>
-        <h1>Add New Employee</h1>
+        <h1>Add Employee</h1>
         <p>${error2}</p>
         
         <form action="Controller" method="get">
@@ -70,7 +79,36 @@
             <input type="date" name="hireDate" value="${person.hireDate}">
             <br><br>
             <input type="hidden" name="action" value="addEmployee">
-            <input type="submit" value="Add Employee">
+            <input type="submit" value="Add Employee">  
+        </form>
+        <br><br>
+        <h1>Edit Employee</h1>
+        <p>${error3}</p>
+            
+        <form action="Controller" method="get">
+            <label>First Name</label>
+            <input type="text" name="fName" value="${emp.firstName}">
+            <br><br>
+            <label>Middle Name</label>
+            <input type="text" name="mName" value="${emp.middleName}">
+            <br><br>
+            <label>Last Name</label>
+            <input type="text" name="lName" value="${emp.lastName}">
+            <br><br>
+            <label>Employee ID</label>
+            <input type="text" name="empIDE" value="${emp.employeeID}">
+            <br><br>
+            
+            <label<c:if test="${invalidDates != null}">
+                    class="wrongDate" </c:if>>Birth Date</label>
+            <input type="date" name="DOB" value="${emp.birthDate}">
+            <br><br>
+            <label>Hire Date</label>
+            <input type="date" name="hireDate" value="${emp.hireDate}">
+            <br><br>
+            <input type="hidden" name="id" value="${id}">
+            <input type="hidden" name="action" value="editEmp">
+            <input type="submit" value="Edit Employee">
         </form>
         
         <br><br>

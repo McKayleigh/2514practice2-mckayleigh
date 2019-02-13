@@ -18,7 +18,7 @@ public class Validation
         String msg = "";
         if (value.isEmpty()) 
         {
-            msg = name + " is required." + lineEnd;
+            msg = name + " is required. <br>";
         }
         return msg;
     }
@@ -31,7 +31,7 @@ public class Validation
             Double.parseDouble(value);
         } catch (NumberFormatException e) 
         {
-            msg = name + " must be a valid number." + lineEnd;
+            msg = name + " must be a valid number. <br>";
         }
         return msg;
     }
@@ -45,7 +45,7 @@ public class Validation
             
         } catch (NumberFormatException e) 
         {
-            msg = name + " must be an integer." + lineEnd;
+            msg = name + " must be an integer. <br>";
         }
         return msg;
     }    

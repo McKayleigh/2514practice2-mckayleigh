@@ -11,7 +11,9 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.Set;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -66,6 +68,13 @@ public class Controller extends HttpServlet
         request.setAttribute("linkMap", linkMap);
         
         String error = "";
+        
+        //for edit
+        int personInd = 0;
+        Person person1 = new Person();
+        
+        //personInd = Integer.parseInt(request.getParameter("empIDE"));
+        
 
         if(action.equals("first"))
         {
@@ -104,6 +113,7 @@ public class Controller extends HttpServlet
         else if(action.equals("addEmployee"))
         {
             error = "";
+            Validation v = new Validation();
             int employeeID = 0;
             LocalDate birthDate = null;
             LocalDate hireDate = null;
@@ -117,24 +127,11 @@ public class Controller extends HttpServlet
             String birthdayDate = request.getParameter("DOB");
             String hiredDate = request.getParameter("hireDate");
             
-            //validate the form
             //fName
-            if(fName == null || fName.equals("")) 
-            {
-                error += "First Name must not be blank. <br>";
-            }
-            
-            //mName
-            //if(mName == null || mName.equals("")) 
-            //{
-                //error += "Middle Name must not be blank. ";
-            //}
+            error += v.isPresent(fName, "First Name");
             
             //lName
-            if(lName == null || lName.equals("")) 
-            {
-                error += "Last Name must not be blank. <br>";
-            }
+            error += v.isPresent(lName, "Last Name");
             
             //employeeID
             try
@@ -187,27 +184,235 @@ public class Controller extends HttpServlet
                     request.setAttribute("invalidDate", invalidDate);
                 }
             }
-            
-            
+        
             //store data in Student object
             Person person = new Person(fName, mName, lName, employeeID, 
-                        birthDate, hireDate);
+                            birthDate, hireDate);
             
             //if vaild
             if (error.equals("")) 
             {
                 linkMap.put(employeeID, new Person(fName, mName, lName, employeeID, 
-                        birthDate, hireDate));
+                            birthDate, hireDate));
                 url = "/display.jsp";
             }
-            //if not valid
             else
             {
                 url = "/display.jsp";
                 request.setAttribute("person", person);
                 request.setAttribute("error2", error);
             }
+        }
+        else if(action.equals("editEmployee"))
+        {
+            try
+            {
+                personInd = Integer.parseInt(request.getParameter("personIndex"));
+            }
+            catch(Exception e)
+            {
+                error += "Not a vaild ID. ";
+            }
             
+            if(linkMap.containsKey(personInd))
+            {
+                person1 = linkMap.get(personInd);
+                request.setAttribute("emp", person1);
+                request.setAttribute("id", personInd);
+               
+//                if(action.equals("editEmployee"))
+//                {
+//                    error = "";
+//                    Validation v = new Validation();
+//                    int employeeID = 0;
+//                    LocalDate birthDate = null;
+//                    LocalDate hireDate = null;
+//                    String invalidDate = null;
+//            
+//                    //get values from form
+//                    String fName = request.getParameter("fName");
+//                    String mName = request.getParameter("mName");
+//                    String lName = request.getParameter("lName");
+//                    String empIDIn = request.getParameter("empID");
+//                    String birthdayDate = request.getParameter("DOB");
+//                    String hiredDate = request.getParameter("hireDate");
+//            
+//                    //fName
+//                    error += v.isPresent(fName, "First Name");
+//            
+//                    //lName
+//                    error += v.isPresent(lName, "Last Name");
+//            
+//                    //employeeID
+//                    try
+//                    {
+//                        employeeID = Integer.parseInt(empIDIn);
+//                
+//                        if(employeeID <= 0)
+//                        {
+//                            error += "Employee ID must be greater than 0. <br>";
+//                        }
+//                        else
+//                        {
+//                            if(linkMap.containsKey(employeeID) && employeeID != personInd)
+//                            {
+//                                error += "*****. <br>";
+//                            }
+//                        }
+//                    }
+//                    catch(Exception e)
+//                    {
+//                        error += "Employee ID must be a number. <br>";
+//                    }
+//            
+//                    //birth date
+//                    try
+//                    {
+//                        birthDate = LocalDate.parse(birthdayDate);
+//                    }
+//                    catch(Exception e)
+//                    {
+//                        error += "Birth date must be a valid date. <br>";
+//                    }
+//            
+//                    //birth date
+//                    try
+//                    {
+//                        hireDate = LocalDate.parse(hiredDate);
+//                    }
+//                    catch(Exception e)
+//                    {
+//                        error += "Hire date must be a valid date. <br>";
+//                    }
+//          
+//                    if(birthDate != null && hireDate != null)
+//                    {
+//                        if(hireDate.isBefore(birthDate))
+//                        {
+//                            invalidDate = "not valid";
+//                            error += "Hire date must not be before birth date. <br>";
+//                            request.setAttribute("invalidDate", invalidDate);
+//                        }
+//                    }
+//        
+//                    //store data in Student object
+//                    Person emp = new Person(fName, mName, lName, employeeID, 
+//                                birthDate, hireDate);
+//                    
+//                    //if vaild
+//                    if (error.equals("")) 
+//                    {
+//                        linkMap.replace(personInd, person1, emp);
+//                        url = "/display.jsp";
+//                    }
+//                    else
+//                    {
+//                        request.setAttribute("emp", emp);
+//                        request.setAttribute("error3", error);
+//                        url = "/display.jsp";
+//                    }
+//                }
+            }
+            else
+            {
+                error += "There is no Employee with that ID. ";
+                request.setAttribute("error3", error);
+            }
+        }
+        else if(action.equals("editEmp") && request.getParameter("empIDE") != null)
+        {
+            personInd = Integer.parseInt(request.getParameter("id"));
+            error = "";
+            Validation v = new Validation();
+            int employeeID = 0;
+            LocalDate birthDate = null;
+            LocalDate hireDate = null;
+            String invalidDate = null;
+            
+            //get values from form
+            String fName = request.getParameter("fName");
+            String mName = request.getParameter("mName");
+            String lName = request.getParameter("lName");
+            String empIDIn = request.getParameter("empIDE");
+            String birthdayDate = request.getParameter("DOB");
+            String hiredDate = request.getParameter("hireDate");
+            
+            //fName
+            error += v.isPresent(fName, "First Name");
+            
+            //lName
+            error += v.isPresent(lName, "Last Name");
+            
+            //employeeID
+            try
+            {
+                employeeID = Integer.parseInt(empIDIn);
+                
+                if(employeeID <= 0)
+                {
+                    error += "Employee ID must be greater than 0. <br>";
+                }
+                else
+                {
+                    if(linkMap.containsKey(employeeID) && employeeID != personInd)
+                    {
+                        error += "There is already an Employee with that ID." + personInd + "<br>";
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                error += "Employee ID must be a number. <br>";
+            }
+            
+            //birth date
+            try
+            {
+                birthDate = LocalDate.parse(birthdayDate);
+            }
+            catch(Exception e)
+            {
+                error += "Birth date must be a valid date. <br>";
+            }
+            
+            //birth date
+            try
+            {
+                 hireDate = LocalDate.parse(hiredDate);
+            }
+            catch(Exception e)
+            {
+                error += "Hire date must be a valid date. <br>";
+            }
+          
+            if(birthDate != null && hireDate != null)
+            {
+                if(hireDate.isBefore(birthDate))
+                {
+                    invalidDate = "not valid";
+                    error += "Hire date must not be before birth date. <br>";
+                    request.setAttribute("invalidDates", invalidDate);
+                }
+            }
+        
+            //store data in Student object
+            Person emp = new Person(fName, mName, lName, employeeID, 
+                            birthDate, hireDate);
+                    
+            //if vaild
+            if (error.equals("")) 
+            {
+                linkMap.remove(personInd);
+                linkMap.put(employeeID, emp);
+                url = "/display.jsp";
+            }
+            else
+            {
+                request.setAttribute("emp", emp);
+                request.setAttribute("error3", error);
+                request.setAttribute("id", personInd);
+                url = "/display.jsp";
+            }
         }
         
         ServletContext sc = getServletContext();
@@ -216,18 +421,6 @@ public class Controller extends HttpServlet
                 .forward(request, response);
     }
     
-    private String isValid(HttpServletRequest request, HttpServletResponse response)
-    {
-        String errorMsg = "";
-        Validation v = new Validation();
-        
-        errorMsg += v.isPresent(request.getParameter("fName"), "First Name");
-        //middle name can be blank
-        errorMsg += v.isPresent(request.getParameter("lName"), "Last Name");
-        errorMsg += v.isPresent(request.getParameter("fName"), "First Name");
-        return errorMsg;
-    }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
