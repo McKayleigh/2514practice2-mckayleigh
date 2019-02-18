@@ -29,7 +29,7 @@ public class PersonDA
             ps.setString(2, person.getFirstName());
             ps.setString(3, person.getMiddleName());
             ps.setString(4, person.getLastName());
-            ps.setLocalDate(5, person.getBirthDate());
+            //ps.setDate(5, person.getBirthDate());
             return ps.executeUpdate();
         } 
         catch (SQLException e) 
